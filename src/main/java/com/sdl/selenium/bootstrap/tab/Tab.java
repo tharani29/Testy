@@ -12,7 +12,11 @@ public class Tab extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Tab.class);
 
     public Tab(By... bys) {
-        getPathBuilder().defaults(By.baseCls("nav nav-tabs"), By.tag("ul"), By.template("title", "count(.//li[@class='active']//a[text()='%s']) > 0")).init(bys);
+        getPathBuilder().defaults(
+                By.baseCls("nav nav-tabs"),
+                By.tag("ul"),
+                By.template("title", "count(.//li[@class='active']//a[text()='%s']) > 0")
+        ).init(bys);
     }
 
     public Tab(String title) {

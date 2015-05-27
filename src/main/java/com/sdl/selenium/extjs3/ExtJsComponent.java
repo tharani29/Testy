@@ -10,8 +10,10 @@ public class ExtJsComponent extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExtJsComponent.class);
 
     public ExtJsComponent(By... bys) {
-        getPathBuilder().defaults(By.template("visibility", "count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0"),
-                By.template("disabled", "/ancestor-or-self::*[contains(@class, 'x-masked') or contains(@class, 'x-item-disabled')]")).init(bys);
+        getPathBuilder().defaults(
+                By.template("visibility", "count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0"),
+                By.template("disabled", "/ancestor-or-self::*[contains(@class, 'x-masked') or contains(@class, 'x-item-disabled')]")
+        ).init(bys);
     }
 
     /**

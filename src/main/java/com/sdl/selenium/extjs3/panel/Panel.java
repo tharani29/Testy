@@ -39,6 +39,7 @@ public class Panel extends ExtJsComponent {
 
     public void setHeaderBaseCls(String headerBaseCls) {
         this.headerBaseCls = headerBaseCls;
+        getPathBuilder().setTemplate("title", "count(*[contains(@class,'" + headerBaseCls + "-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
     }
 
     public String itemToString() {
@@ -94,4 +95,6 @@ public class Panel extends ExtJsComponent {
     public boolean toggle() {
         return clickOnTool("toggle");
     }
+
+
 }

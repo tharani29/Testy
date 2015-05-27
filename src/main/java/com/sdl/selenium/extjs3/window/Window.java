@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs3.window;
 
 import com.sdl.selenium.extjs3.panel.Panel;
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
@@ -28,23 +29,21 @@ public class Window extends Panel {
                 selector = "preceding-sibling::*[contains(@class, 'ext-el-mask') and contains(@style, 'display: block')]";
             }
         }
-        setElPathSuffix("modal-window", selector);
+        getPathBuilder().setElPathSuffix("modal-window", selector);
     }
 
     /**
      * Windows have default style="visibility: visible;"
      */
-    public Window() {
-        setClassName("Window");
-        setBaseCls("x-window");
-        setHeaderBaseCls(getBaseCls());
-        setTemplate("title", "count(*[contains(@class,'" + getHeaderBaseCls() + "-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
-        setElPathSuffix("exclude-hide-cls", null);
+    public Window(By...bys) {
+        getPathBuilder().defaults(By.baseCls("x-window"), By.pathSuffix("exclude-hide-cls", null)).init(bys);
+
+        setHeaderBaseCls(getPathBuilder().getBaseCls());
         // test for IE be cause of :
         // http://jira.openqa.org/browse/SEL-545
         // and http://code.google.com/p/selenium/issues/detail?id=1716
         if (!WebDriverConfig.isIE()) {
-            setStyle("visibility: visible;");
+            getPathBuilder().setStyle("visibility: visible;");
         }
     }
 
