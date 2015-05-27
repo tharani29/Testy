@@ -44,7 +44,6 @@ public class WebLocatorTest {
                 {new WebLocator(By.classes("Cls", "Clss")), "//*[contains(concat(' ', @class, ' '), ' Cls ') and contains(concat(' ', @class, ' '), ' Clss ')]"},
                 {new WebLocator(By.classes("Cls")).setContainer(container), CONTAINER_PATH + "//*[contains(concat(' ', @class, ' '), ' Cls ')]"},
                 {new WebLocator(By.container(container), By.classes("Cls")), CONTAINER_PATH + "//*[contains(concat(' ', @class, ' '), ' Cls ')]"},
-                {new WebLocator(container, "//*[contains(@class, 'testcls')]"), CONTAINER_PATH + "//*[contains(@class, 'testcls')]"},
                 {new WebLocator("testcls", container), CONTAINER_PATH + "//*[contains(concat(' ', @class, ' '), ' testcls ')]"},
                 {new WebLocator("text", "testcls", container), CONTAINER_PATH + "//*[contains(concat(' ', @class, ' '), ' testcls ') and contains(text(),'text')]"},
                 {new WebLocator().setId("ID"), "//*[@id='ID']"},
@@ -63,7 +62,6 @@ public class WebLocatorTest {
                 {new WebLocator(By.labelTag("textarea"), By.label("Label")), "//textarea[text()='Label']//following-sibling::*//*"},
                 {new WebLocator(container).setTag("textarea"), CONTAINER_PATH + "//textarea"},
                 {new WebLocator().setClasses("Cls").setTag("textarea"), "//textarea[contains(concat(' ', @class, ' '), ' Cls ')]"},
-                {new WebLocator(container, "//*[contains(@class, 'testcls')]").setTag("textarea"), CONTAINER_PATH + "//*[contains(@class, 'testcls')]"},
                 {new WebLocator().setElPathSuffix("has-div", "count(div) > 0"), "//*[count(div) > 0]"},
                 {new WebLocator(By.pathSuffix("has-div", "count(div) > 0")), "//*[count(div) > 0]"},
                 {new WebLocator().setExcludeClasses("cls1", "cls2"), "//*[not(contains(@class, 'cls1')) and not(contains(@class, 'cls2'))]"},
@@ -156,7 +154,7 @@ public class WebLocatorTest {
 
     @Test
     public void getPathSelectorSetIdWhenWebLocatorHasContainerAndPath() {
-        WebLocator el = new WebLocator(container, "//*[contains(@class, 'testcls')]");
+        WebLocator el = new WebLocator(container).setElPath("//*[contains(@class, 'testcls')]");
         el.setId("ID");
         assertEquals(el.getPathBuilder().getPath(), CONTAINER_PATH + "//*[contains(@class, 'testcls')]");
     }
@@ -178,7 +176,7 @@ public class WebLocatorTest {
     //@Test
     // TODO fix getPathSelectorSetIdWhenWebLocatorHasXPath
     public void getPathSelectorSetIdWhenWebLocatorHasXPath() {
-        WebLocator el = new WebLocator(null, CONTAINER_PATH + "//*[contains(@class, 'testcls') and contains(text(),'text')]");
+        WebLocator el = new WebLocator().setElPath("//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(@class, 'testcls') and contains(text(),'text')]");
         el.setId("ID");
         assertEquals(el.getPathBuilder().getPath(), CONTAINER_PATH + "//*[@id='ID' and contains(@class, 'testcls') and contains(text(),'text')]");
     }

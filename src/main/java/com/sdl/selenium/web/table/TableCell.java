@@ -31,4 +31,13 @@ public class TableCell extends Cell {
     public TableCell(WebLocator container, int columnIndex, String columnText, SearchType... searchType) {
         this(container, By.tagIndex(columnIndex), By.text(columnText, searchType));
     }
+
+    @Override
+    protected String addPositionToPath(String itemPath) {
+        if (hasPosition()) {
+            int beginIndex = 2 + getTag().length();
+            itemPath = getRoot() + getTag() + "[" + getPosition() + "]" + itemPath.substring(beginIndex);
+        }
+        return itemPath;
+    }
 }

@@ -37,9 +37,8 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         this(By.classes(cls));
     }
 
-    @Deprecated
-    public WebLocator(WebLocator container, String elPath) {
-        this(container, By.xpath(elPath));
+    public WebLocator(WebLocator container) {
+        setContainer(container);
     }
 
     public WebLocator(String cls, WebLocator container) {
@@ -309,34 +308,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return executor.isTextPresent(this, text);
     }
 
-    public long getRenderMillis() {
-        return renderMillis;
-    }
-
-    /**
-     * @param renderMillis milliseconds
-     * @return this element
-     */
-
-    public <T extends WebLocatorAbstractBuilder> T setRenderMillis(final long renderMillis) {
-        this.renderMillis = renderMillis;
-        return (T) this;
-    }
-
-    public <T extends WebLocatorAbstractBuilder> T setRenderSeconds(final int renderSeconds) {
-        setRenderMillis(renderSeconds * 1000);
-        return (T) this;
-    }
-
-    public int getActivateSeconds() {
-        return activateSeconds;
-    }
-
-    public <T extends WebLocatorAbstractBuilder> T setActivateSeconds(final int activateSeconds) {
-        this.activateSeconds = activateSeconds;
-        return (T) this;
-    }
-
     /**
      * wait 5 seconds (or specified value for renderSeconds)
      *
@@ -344,16 +315,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      */
     public boolean waitToRender() {
         return waitToRender(getRenderMillis());
-    }
-
-    /**
-     * @deprecated use waitToRender(1000L) (with millis)
-     * @param seconds time in seconds
-     * @return true | false
-     */
-    public boolean waitToRender(int seconds) {
-        LOGGER.warn("waitToRender(seconds) is deprecated, please use waitToRender(millis). (eg. waitToRender(1000L).");
-        return waitToRender((long) seconds * 1000);
     }
 
     public boolean waitToRender(final long millis) {
@@ -423,7 +384,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public boolean ready(int seconds) {
-        return waitToRender((long) seconds * 1000) && waitToActivate(seconds);
+        return waitToRender(seconds * 1000) && waitToActivate(seconds);
     }
 
     public boolean isDisabled() {

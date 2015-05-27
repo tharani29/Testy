@@ -30,7 +30,7 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
     }
 
     @Override
-    public boolean rowSelect(String searchText, SearchType searchType) {
+    public boolean rowSelect(String searchText, SearchType... searchType) {
         ready(true);
         TableCell cell = getCell(searchText, searchType);
         return doCellSelect(cell);
@@ -125,16 +125,9 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
     }
 
     @Override
-    public TableCell getCell(String searchElement, SearchType searchType) {
+    public TableCell getCell(String searchElement, SearchType ...searchType) {
         WebLocator row = new WebLocator(this).setTag("tr");
         return new TableCell(row).setText(searchElement, searchType);
-    }
-
-    /**
-     * @deprecated please use getCell(searchElement, SearchType.*);
-     */
-    public TableCell getTableCell(String searchElement, SearchType searchType) {
-        return getCell(searchElement, searchType);
     }
 
     public TableCell getTableCell(int rowIndex, int columnIndex, String text) {
@@ -161,12 +154,28 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
         return new TableRow(this, indexRow, byCells).setInfoMessage("-TableRow");
     }
 
-    public TableCell getTableCell(int columnIndex, TableCell... byCells) {
+    @Override
+    public TableCell getCell(int columnIndex, TableCell... byCells) {
         return new TableCell(getRow(byCells), columnIndex);
     }
 
-    public TableCell getTableCell(int columnIndex, String text, TableCell... byCells) {
+    /**
+     * @deprecated use getCell(int columnIndex, TableCell... byCells)
+     */
+    public TableCell getTableCell(int columnIndex, TableCell... byCells) {
+        return getCell(columnIndex, byCells);
+    }
+
+    @Override
+    public TableCell getCell(int columnIndex, String text, TableCell... byCells) {
         return new TableCell(getRow(byCells), columnIndex, text, SearchType.EQUALS);
+    }
+
+    /**
+     * @deprecated use getCell(int columnIndex, String text, TableCell... byCells)
+     */
+    public TableCell getTableCell(int columnIndex, String text, TableCell... byCells) {
+        return getCell(columnIndex, text, byCells);
     }
 
     /**

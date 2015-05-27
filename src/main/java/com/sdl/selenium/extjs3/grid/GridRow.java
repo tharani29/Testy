@@ -21,6 +21,7 @@ public class GridRow extends Row {
         this(By.container(container), By.xpath(elPath));
     }
 
+    //TODO generated standard xpath  independent of constructors
     public GridRow(GridPanel gridPanel) {
         this(By.container(gridPanel), By.tag("div"), By.classes("x-grid3-row"), By.excludeClasses("x-grid3-row-checker"));
     }

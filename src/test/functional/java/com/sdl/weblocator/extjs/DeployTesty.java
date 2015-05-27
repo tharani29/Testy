@@ -64,7 +64,7 @@ public class DeployTesty extends TestBase {
     private TabPanel browseStorage = new TabPanel(viewRepositories, "Browse Storage");
     private Table table1 = new Table(browseStorage).setCls("x-toolbar-ct");
     private WebLocator testyDir = new WebLocator().setElPath("//a[@class='x-tree-node-anchor' and count(.//span[text()='Testy']) > 0]");
-    private TableCell tableCell = table1.getTableCell(4, new TableCell(3, "Path Lookup:", SearchType.EQUALS));
+    private TableCell tableCell = table1.getCell(4, new TableCell(3, "Path Lookup:", SearchType.EQUALS));
     private com.sdl.selenium.extjs3.form.TextField searchField = new com.sdl.selenium.extjs3.form.TextField(tableCell);
 
     @BeforeClass

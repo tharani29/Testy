@@ -17,13 +17,6 @@ public class ComboBox extends TextField implements ICombo {
         super(bys);
     }
 
-    /**
-     * @deprecated
-     */
-    public ComboBox(String cls) {
-        this(By.classes(cls));
-    }
-
     public ComboBox(WebLocator container) {
         this(By.container(container));
     }

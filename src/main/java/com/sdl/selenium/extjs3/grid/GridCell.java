@@ -34,14 +34,6 @@ public class GridCell extends Cell {
                 By.infoMessage("td[" + columnIndex + "]//x-grid3-cell-inner"));
     }
 
-    /**
-     * @deprecated use other constructors
-     */
-    public GridCell(WebLocator container, int columnIndex) {
-        this(columnIndex);
-        getPathBuilder().setContainer(container);
-    }
-
     public GridCell(String text, WebLocator container) {
         this(By.container(container), By.text(text), By.classes("x-grid3-cell-inner"));
     }
@@ -54,19 +46,19 @@ public class GridCell extends Cell {
         this(By.container(container), By.text(text, searchType), By.classes("x-grid3-cell-inner"));
     }
 
-    public GridCell(int columnIndex, String columnText, SearchType searchType) {
+    public GridCell(int columnIndex, String columnText, SearchType... searchType) {
         this();
         getPathBuilder().setTag("td[" + columnIndex + "]//*");
         setText(columnText);
         setSearchTextType(searchType);
     }
 
-    /**
-     * @deprecated use other constructors
-     */
-    public GridCell(WebLocator container, int columnIndex, String columnText, SearchType searchType) {
-        this(columnIndex, columnText, searchType);
-        getPathBuilder().setContainer(container);
+    @Override
+    protected String addPositionToPath(String itemPath) {
+        if (hasPosition()) {
+            itemPath = "//td[" + getPosition() + "]" + itemPath;
+        }
+        return itemPath;
     }
 
     public boolean select() {
